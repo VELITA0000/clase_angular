@@ -1,0 +1,8 @@
+<p>movies works!</p>
+<h1>Lista de peliculas</h1>
+@if (!movies.length) {
+    <p>No hay peliculas</p>
+}
+@for (item of movies; track item) {
+    <app-movie-item [title]="item"></app-movie-item>
+}
