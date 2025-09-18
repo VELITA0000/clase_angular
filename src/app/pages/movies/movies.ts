@@ -13,6 +13,8 @@ export class Movies {
     'Terminator',
     'Chuerco',
     'Son como ninos'
-  ]
-
+  ];
+  handleMovieSelected(title: string) {
+    alert(title)
+  }
 }

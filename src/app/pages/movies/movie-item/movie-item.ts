@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-movie-item',
@@ -9,4 +9,10 @@ import { Component, Input } from '@angular/core';
 
 export class MovieItem {
   @Input() title = ''; 
+  @Output() onSelected: EventEmitter<string> = new EventEmitter();
+  selectMovie() {
+    console.log('Evento select movie ejecutado a elemento title: ', this.title);
+    this.onSelected.emit(this.title);
+  }
 }
+
