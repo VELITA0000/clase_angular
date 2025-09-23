@@ -1,0 +1,221 @@
+TENGO UN PROYECTO DE ANGULAR EN EL QUE TENGO 2 PROBLEMAS, CONSIDERA QUE TRABAJE DISTINTOS CASOS PARA IMPLEMENTAR DE LOS ELEMENTOS
+TAN ES ASI QUE TENGO 2 EJEMPLOS PARA LA LISTA DE PELICULAS, LO HICE CON INTENCION.
+1. se duplican los elementos de pelicula, para los 2 ejemplos implementados con un ciclo for, donde el primer elemento sale 
+normal y el segundo en color verde y subrayado:
+    EJEMPLO 1:
+        Titulo: Terminator (negro)
+        Titulo: Terminator (verde y subrayado)
+        Titulo: Chuerco (negro)
+        Titulo: Chuerco (verde y subrayado)
+        Titulo: Son como ninos (negro)
+        Titulo: Son como ninos (verde y subrayado)
+
+    EJEMPLO 2:
+        Titulo: Terminator (negro)
+        Titulo: Terminator (verde y subrayado)
+        Titulo: Chuerco (negro)
+        Titulo: Chuerco (verde y subrayado)
+        Titulo: Son como ninos (negro)
+        Titulo: Son como ninos (verde y subrayado)
+
+2. Cuando presiono cualquier elemento verde y subrayado me debe redirigir a movie-details pero tambien mostrar el titulo 
+del elemento que se presiono
+    header works!
+    Hola Velita
+    MOVIE NAME
+    footer works!
+
+LA ESTRUCTURA DE MI PROYECTO ES ASI, REVISA MIS ARCHIVOS PARA VER EL PROBLEMA:
+.angular, node_modules, .gitignore, angular.json, package.json, tsconfig.json, public
+src/
+    index.html, .ts, .scss
+    app/
+        app.scss, .spec.ts,
+        app.config.ts
+        app.html
+        app.routes.ts
+        app.ts
+        layout/
+            footer/ and header/
+        pages/
+            movies/
+                movies.html, scss, .spec.ts, .ts
+                movie-details/
+                    movie-details/
+                        .html, scss, .spec.ts, .ts
+                movie-item/
+                    movie-item/
+                        .html, scss, .spec.ts, .ts
+            not-found/
+        shared/
+            movie.spec.ts, movie.ts
+        
+
+Y ESTE ES EL CONTENIDO DE LOS ARCHIVOS:
+-----------------------------------------------------
+app/pages/movie-details/movie-details.html:
+    <p>movie-details works!</p>
+    <h2>{{title}}</h2>
+-----------------------------------------------------
+app/pages/movie-details/movie-details.ts:
+    import { Component } from '@angular/core';
+    import { Movie } from '../../../shared/services/movie';
+
+    @Component({
+        selector: 'app-movie-details',
+        imports: [],
+        templateUrl: './movie-details.html',
+        styleUrl: './movie-details.scss'
+    })
+    export class MovieDetails {
+    title: string = '';
+
+    constructor(private movieService: Movie) {
+            this.title = this.movieService.getMovie();
+        }
+    }
+-----------------------------------------------------
+app/pages/movies/movie-item/movie-item.html
+<div>Titulo: {{title}}</div>
+<div>
+    <a routerLink="../movie-details" (click)="selectMovie()">Titulo: {{title}}</a>
+</div>
+-----------------------------------------------------
+app/pages/movies/movie-item/movie-item.ts
+    import { Component } from '@angular/core';
+    import { Movie } from '../../../shared/services/movie';
+
+    @Component({
+        selector: 'app-movie-details',
+        imports: [],
+        templateUrl: './movie-details.html',
+        styleUrl: './movie-details.scss'
+    })
+    export class MovieDetails {
+    title: string = '';
+
+    constructor(private movieService: Movie) {
+            this.title = this.movieService.getMovie();
+        }
+    }
+-----------------------------------------------------
+app/pages/movies/movie-item/movie-item.scss
+a {
+    color: green;
+}
+-----------------------------------------------------
+app/pages/movies/movies/movies.html
+`    <p>movies works!</p>
+    <h1>Lista de peliculas</h1>
+    @if (!movies.length) {
+        <p>No hay peliculas</p>
+    }
+    <!--Directivas if y for-->
+    <!--Propiedad binding con [] de elemento padre a hijo-->
+    <!--Propiedad evento con de elemento de hijo a padre-->
+    <!--Las directivas se escriben como atributos de etiquetas-->
+    @for (item of movies; track item) {
+        <app-movie-item [title]="item"></app-movie-item>
+    }
+
+    <br>
+    @for (item of movies; track item) {
+        <app-movie-item [title]="item" (onSelected)="handleMovieSelected($event)"></app-movie-item>
+    }`
+-----------------------------------------------------
+app/pages/movies/movies/movies.ts
+    import { Component } from '@angular/core';
+    import { CommonModule } from '@angular/common';
+    import { MovieItem } from './movie-item/movie-item';
+    import { Movie } from '../../shared/services/movie';
+
+    @Component({
+    selector: 'app-movies',
+    imports: [CommonModule, MovieItem],
+    templateUrl: './movies.html',
+    styleUrl: './movies.scss'
+    })
+    export class Movies {
+    movies: string[] = [
+        'Terminator',
+        'Chuerco',
+        'Son como ninos'
+    ];
+    
+    constructor(private movieService: Movie) {}
+
+    handleMovieSelected(title: string) {
+        alert(title)
+            localStorage.setItem('movie', title);
+            this.movieService.setMovie(title);
+        }
+    }
+-----------------------------------------------------
+app/shared/services/movie.ts
+    import { Injectable } from '@angular/core';
+
+    @Injectable({
+    providedIn: 'root'
+    })
+    export class Movie {
+    title: string = '';
+
+    getMovie(): string {
+        return this.title;
+    }
+
+    setMovie(title: string): void {
+        this.title = title;
+    }
+
+    }
+-----------------------------------------------------
+app/app.html
+    <app-header></app-header>
+    <main>
+    Hola {{nombre}}
+    <br>
+    <!--
+    Peliculas hardcodeadas en cualquier ruta
+    <app-movies></app-movies>-->
+    <br>
+        <!--Contenido mostrada por rutas-->
+    <router-outlet></router-outlet>
+    
+    
+    </main>
+    <app-footer></app-footer>
+-----------------------------------------------------
+app/routes.ts
+    import { Routes } from '@angular/router';
+    import { Movies } from './pages/movies/movies';
+    import { MovieItem } from './pages/movies/movie-item/movie-item';
+    import { MovieDetails } from './pages/movies/movie-details/movie-details';
+    import { NotFound } from './pages/not-found/not-found'
+    export const routes: Routes = [
+        // { path: '', component: Home},
+        // para evitar que parezca que 2 paginas tienen el mismo contenido
+        { path: '', redirectTo: 'movies', pathMatch: 'full'},
+        { path: 'movies', component: Movies},
+        { path: 'movie-items', component: MovieItem},
+        { path: 'movie-details', component: MovieDetails},
+        { path: '**', component: NotFound}
+    ];
+-----------------------------------------------------
+app/app.ts
+    import { Component, signal } from '@angular/core';
+    import { RouterOutlet } from '@angular/router';
+    import { Header } from './layout/header/header';
+    import { Footer } from './layout/footer/footer';
+    // import { Movies } from './pages/movies/movies'; para agregar el Movies hardcodeado
+
+    @Component({
+    selector: 'app-root',
+    imports: [Header, Footer, RouterOutlet], // se pone Movies para hardcodear
+    templateUrl: './app.html',
+    styleUrl: './app.scss'
+    })
+
+    export class App {
+    nombre = 'Velita'
+    }

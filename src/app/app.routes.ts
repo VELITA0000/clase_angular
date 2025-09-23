@@ -6,8 +6,8 @@ import { NotFound } from './pages/not-found/not-found'
 export const routes: Routes = [
     // { path: '', component: Home},
     // para evitar que parezca que 2 paginas tienen el mismo contenido
-    { path: 'movies', component: Movies},
     { path: '', redirectTo: 'movies', pathMatch: 'full'},
+    { path: 'movies', component: Movies},
     { path: 'movie-items', component: MovieItem},
     { path: 'movie-details', component: MovieDetails},
     { path: '**', component: NotFound}

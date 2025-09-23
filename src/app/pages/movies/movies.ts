@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MovieItem } from './movie-item/movie-item';
+import { Movie } from '../../shared/services/movie';
 
 @Component({
   selector: 'app-movies',
@@ -14,7 +15,12 @@ export class Movies {
     'Chuerco',
     'Son como ninos'
   ];
+  
+  constructor(private movieService: Movie) {}
+
   handleMovieSelected(title: string) {
-    alert(title)
+    // alert(title)
+    // localStorage.setItem('movie', title);
+    this.movieService.setMovie(title);
   }
 }

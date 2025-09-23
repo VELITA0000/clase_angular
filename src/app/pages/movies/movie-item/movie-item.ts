@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-movie-item',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './movie-item.html',
   styleUrl: './movie-item.scss'
 })

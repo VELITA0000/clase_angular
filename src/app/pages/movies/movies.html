@@ -1,14 +1,18 @@
 <p>movies works!</p>
 <h1>Lista de peliculas</h1>
+
 @if (!movies.length) {
     <p>No hay peliculas</p>
 }
 <!--Directivas if y for-->
 <!--Propiedad binding con [] de elemento padre a hijo-->
 <!--Propiedad evento con de elemento de hijo a padre-->
+<!--Las directivas se escriben como atributos de etiquetas-->
+<!--IMPRIMIR SIN EVENTO
 @for (item of movies; track item) {
     <app-movie-item [title]="item"></app-movie-item>
 }
+-->
 
 <br>
 @for (item of movies; track item) {
