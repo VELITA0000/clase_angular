@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Movie } from '../../../shared/services/movie';
-
+import { Movie as IMovie } from '../../../shared/types/movie';
 @Component({
   selector: 'app-movie-details',
   imports: [],
@@ -8,9 +8,9 @@ import { Movie } from '../../../shared/services/movie';
   styleUrl: './movie-details.scss'
 })
 export class MovieDetails {
-  title: string = '';
+  movie: IMovie = { title: ''};
 
   constructor(private movieService: Movie) {
-    this.title = this.movieService.getMovie();
+    this.movie = this.movieService.getMovie();
   }
 }

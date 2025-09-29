@@ -1,17 +1,35 @@
 import { Injectable } from '@angular/core';
+import { Movie as IMovie } from '../types/movie';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Movie {
-  title: string = '';
 
-  getMovie(): string {
-    return this.title;
+  // private title: string = '';
+  private movie: IMovie = { title: ''}
+  private movies: IMovie[] = [
+    { title: 'Chuerco'},
+    { title: 'Terminator'},
+    { title: 'Son como ninos'}
+  ];
+  
+  getMovie(): IMovie {
+    return this.movie.title ? this.movie: JSON.parse(localStorage.getItem('movie') || '{}');
   }
 
-  setMovie(title: string): void {
-    this.title = title;
+  setMovie(movie: IMovie): void {
+    this.movie = movie;
+    localStorage.setItem('movie', JSON.stringify(movie));
   }
 
+  getAllMovies(): Promise<IMovie[]> {
+    console.log('getAllMovies llamado'); 
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('Timeout terminado, resolviendo movies:', this.movies);
+        resolve(this.movies);
+      }, 2000);
+    });
+  }
 }
