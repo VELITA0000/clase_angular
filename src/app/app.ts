@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './layout/header/header';
 import { Footer } from './layout/footer/footer';
@@ -13,4 +13,11 @@ import { Footer } from './layout/footer/footer';
 
 export class App {
   nombre = 'Velita'
+
+  constructor(changeDetectorRef: ChangeDetectorRef) {
+    setTimeout(() => {
+      this.nombre = 'David';
+      changeDetectorRef.markForCheck();
+    }, 3000);
+  }
 }
