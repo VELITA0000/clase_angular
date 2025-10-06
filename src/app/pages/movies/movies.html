@@ -1,14 +1,15 @@
+<form (submit)="addMovie()">
+  <input type="text" name="movie" [(ngModel)]="title">
+  <button [disabled]="!title || !confirmed">Crear</button>
+  <input type="checkbox" name="terms" [(ngModel)]="confirmed"> Aceptar Terminos
+</form>
+
 <h1>Lista de peliculas</h1>
 <p>{{movies.length}} películas cargadas</p>
 
 <!-- Mostrar mensaje si no hay películas -->
 <p *ngIf="!movies.length">No hay peliculas</p>
 
-<form (submit)="addMovie()">
-  <input type="text" name="movie" [(ngModel)]="title">
-  <button [disabled]="!title || !confirmed">Crear</button>
-  <input type="checkbox" name="terms" [(ngModel)]="confirmed"> Aceptar Terminos
-</form>
 <!-- Iterar las películas -->
 @for (item of movies; track item) {
     <app-movie-item [movie]="item" (onSelected)="handleMovieSelected($event)"></app-movie-item>

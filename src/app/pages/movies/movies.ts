@@ -36,8 +36,8 @@ export class Movies implements OnInit {
 
   addMovie() {
     alert('Agregar: ' + this.title);
+    this.movieService.addMovie(this.title);
+    this.movies.push({ title: this.title }); // este no es el objeto que se manda sino el de la respuesta con un id
     this.title = '';
   }
-
-
 }

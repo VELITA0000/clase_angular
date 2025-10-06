@@ -9,6 +9,13 @@
     <!--Contenido mostrada por rutas-->
   <router-outlet></router-outlet>
   
-  
+  <h1>Publicaciones</h1>
+
+  <ul>
+    @for(post of posts; track $index) {
+      <li>{{post.title}}</li>
+    }
+  </ul>
+
 </main>
 <app-footer></app-footer>

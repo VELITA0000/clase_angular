@@ -28,8 +28,14 @@ export class Movie {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         console.log('Timeout terminado, resolviendo movies:', this.movies);
-        resolve(this.movies);
+        resolve([...this.movies]); // (this.movies)
       }, 2000);
     });
+  }
+
+  addMovie(title: string) {
+    this.movies.push({
+      title
+    })
   }
 }
