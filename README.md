@@ -7,6 +7,7 @@ el hijo le dice al padre que seleccionaron un elemento de ese hijo, el hijo tien
 # binders
 (event en html) le mandamos datos del hijo al padre, disparamos un metodo de la clase padre que hace alguna accion 
  [property] le mandamos datos del padre al hijo
+ cuando te lleguen los datos, asignalos a la propiedad y el binder los pasa al html
 
  # rutas
  que quiero cargar

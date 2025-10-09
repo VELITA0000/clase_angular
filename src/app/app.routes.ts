@@ -11,4 +11,5 @@ export const routes: Routes = [
     { path: 'movie-items', component: MovieItem},
     { path: 'movie-details', component: MovieDetails},
     { path: '**', component: NotFound}
+    // primero poner rutas fijas, con valores que no cambian y luego los variables, como id que puede cambiar
 ];
